@@ -1,5 +1,5 @@
 # Import the necessary classes from their respective modules
-from data_loader import DataLoader
+from src.ingestion.data_loader import DataLoader
 from data_cleaner import DataCleaner
 from data_explorer import DataEDA
 from data_visualizer import DataVisualizer
@@ -12,7 +12,7 @@ class AnalysisPipeline:
         self.file_path = file_path
         self.df = None
         self.visualizer = None
-        self.eda_analyzer = None
+        self.data_explorer = None
 
     def run_pipeline(self):
         print("======================================================")
@@ -33,22 +33,23 @@ class AnalysisPipeline:
         self.df = data_cleaner.get_cleaned_data()
 
         # 3. EDA & FEATURE ENGINEERING PHASE
-        self.eda_analyzer = DataEDA(self.df)
+        self.data_explorer = DataEDA(self.df)
 
         # Data Summarization (check post-cleaning quality)
-        self.eda_analyzer.summarize_data_quality()
+        self.data_explorer.summarize_data_quality()
 
         # Calculate Risk Profiles (needed for visualization)
-        risk_by_province = self.eda_analyzer.calculate_risk_by_group('Province')
-        risk_by_gender = self.eda_analyzer.calculate_risk_by_group('Gender')
+        risk_by_province = self.data_explorer.calculate_risk_by_group('Province')
+        risk_by_gender = self.data_explorer.calculate_risk_by_group('Gender')
 
         # Final DataFrame with engineered features
-        final_df = self.eda_analyzer.get_clean_data()
+        final_df = self.data_explorer.get_clean_data()
 
         # 4. DATA VISUALIZATION PHASE
         self.visualizer = DataVisualizer(final_df)
 
         # Generate the three key plots
+        self.visualizer.plot_financial_distributions()
         self.visualizer.plot_geographic_risk_profile(risk_by_province)
         self.visualizer.plot_gender_risk_breakdown(risk_by_gender)
         self.visualizer.plot_premium_vs_value()
@@ -64,7 +65,7 @@ class AnalysisPipeline:
 
 if __name__ == "__main__":
     # Define a conceptual file path
-    FILE_PATH = 'data/alpha_care_claims.csv'
+    FILE_PATH = '../../data/raw/MachineLearningRating_v3.txt'
 
     # Instantiate and run the pipeline
     pipeline = AnalysisPipeline(FILE_PATH)

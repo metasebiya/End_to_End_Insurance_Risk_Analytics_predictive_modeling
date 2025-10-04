@@ -1,3 +1,7 @@
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 class DataVisualizer:
     """
     (This class remains the same, but now uses the cleaned and feature-engineered data.)
