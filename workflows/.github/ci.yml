@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          # Install all dependencies including dev tools (flake8, pytest)
+          pip install -r requirements.txt
+
+      - name: Run Linting (Flake8)
+        # Check all Python files in the src/ and config/ directories for style and errors
+        run: flake8 src/ config/ --max-line-length=120 --exclude=__init__.py
+
+      - name: Run Tests (Pytest)
+        # Executes all tests in the 'tests/' directory
+        run: pytest tests/
+
+      - name: Build Docker Image Verification
+        # This step ensures the Dockerfile is correctly configured and builds successfully
+        # This is a critical check before deployment
+        run: docker build -t alpha-care-analytics:latest .
+
+      # Note: Steps for pushing to Docker registry or deployment (CD) would follow here.
