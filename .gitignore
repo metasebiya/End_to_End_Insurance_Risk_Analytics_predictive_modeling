@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 #data
-data/
+data/MachineLearningRating_v3.txt
 
 # Virtual environment
 venv/
