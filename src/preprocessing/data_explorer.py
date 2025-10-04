@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 class DataEDA:
     """
     (This class remains largely the same, but now takes the cleaned data.)

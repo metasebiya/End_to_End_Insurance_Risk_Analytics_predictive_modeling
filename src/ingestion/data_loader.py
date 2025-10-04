@@ -23,7 +23,7 @@ class DataLoader:
         print(f"Loading data from: {self.file_path}")
         try:
             # Conceptual: Assuming the historical data is a CSV file
-            self.df = pd.read_csv(self.file_path)
+            self.df = pd.read_csv(self.file_path,  sep='|')
             print("Data loaded successfully.")
             return self.df
         except FileNotFoundError:
