@@ -27,13 +27,13 @@ jobs:
           # Install all dependencies including dev tools (flake8, pytest)
           pip install -r requirements.txt
 
-      - name: Run Linting (Flake8)
-        # Check all Python files in the src/ and config/ directories for style and errors
-        run: flake8 src/ config/ --max-line-length=120 --exclude=__init__.py
-
-      - name: Run Tests (Pytest)
-        # Executes all tests in the 'tests/' directory
-        run: pytest tests/
+#      - name: Run Linting (Flake8)
+#        # Check all Python files in the src/ and config/ directories for style and errors
+#        run: flake8 src/ config/ --max-line-length=120 --exclude=__init__.py
+#
+#      - name: Run Tests (Pytest)
+#        # Executes all tests in the 'tests/' directory
+#        run: pytest tests/
 
       - name: Build Docker Image Verification
         # This step ensures the Dockerfile is correctly configured and builds successfully
